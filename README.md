@@ -25,3 +25,11 @@
 - Job, step 등 job을 구성할 수 있는 클래스들
 3. batch infrastructure
 - item, repeat 등 실제 데이터들을 처리하고 핸들링하는 클래스들
+
+## 5. Job, Step, Tasklet
+
+Job : 일, 일감. Step의 집합
+
+Step : 일의 단계. Tasklet을 실행
+
+Tasklet : 실제 수행 비즈니스 로직
