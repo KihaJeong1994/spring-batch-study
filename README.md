@@ -33,3 +33,18 @@ Job : 일, 일감. Step의 집합
 Step : 일의 단계. Tasklet을 실행
 
 Tasklet : 실제 수행 비즈니스 로직
+
+## 6. Spring batch metadata
+
+- 배치 도메인(Job, Step, JobParameters) 관련 정보
+- 스프링 배치 실행 및 관리를 위해 이러한 도메인 정보를 저장, 업데이트, 조회할 수 있는 스키마 제공
+  - 실행 정보, 성공 실패 여부 등
+  - DB와 연동 시 필수적으로 메타 테이블이 생성 되어야함
+- org/springframework/batch/core/schema-*.sql 형태로 제공. 즉, 해당 모듈에 가보면 sql 파일 존재
+  - DB 유형별로 제공
+- 스키마 생성 설정
+  - 수동 생성 : 직접 쿼리 복붙
+  - 자동 생성 : spring.batch.jdbc.initialize-schema  설정
+    - ALWAYS
+    - EMBEDDED
+    - NEVER
