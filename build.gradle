@@ -19,9 +19,12 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-batch'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'mysql:mysql-connector-java' // spring boot 2.7.8 이후 부터 변경. 즉 이전에는 mysql:mysql-connector-java 사용
     runtimeOnly 'com.h2database:h2' // datasource가 있어야 spring batch 실행 가능
-    
+
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.batch:spring-batch-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
