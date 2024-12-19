@@ -33,6 +33,15 @@
 - Job : 배치 계층 구조 최상위. 하나의 배치 작업 자체
   - SimpleJob : 순차적으로 Step 실행
   - FlowJob : 특정한 조건과 흐름에 따라 Step 실행
+- JobInstance
+  - 고유하게 식별 가능한 작업 실행
+  - ex) 오늘 실행한 A Job과 내일 실행한 A Job은 같은 Job이지만, 다른 인스턴스이고, 실행 시기, 내용 등이 다름
+  - JobName + jobKey(JobParameters의 해시값) 을 식별값으로 가짐 -> 같은 JobKey를 가지고 있는 JobInstance는 중복해서 실행 불가
+  - BATCH_JOB_INSTANCE 테이블과 매핑
+- JobLauncher
+  - Job 실행. Job과 JobParameters를 인자로 받아서 실행
+- JobRepository
+  - Job 실행 중 발생하는 메타데이터를 DB에 저장
 
 ### 5-2. Step : 일의 단계. Tasklet을 실행
 

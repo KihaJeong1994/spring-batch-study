@@ -30,3 +30,5 @@ spring:
   batch:
     jdbc:
       initialize-schema: always # never일 때 db에 spring batch metadata 스키마가 없으면 에러 발생. 단, embedded의 경우 알아서 생성되어서 불필요
+#    job:
+#      enabled: false
