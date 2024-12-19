@@ -28,11 +28,15 @@
 
 ## 5. Job, Step, Tasklet
 
-Job : 일, 일감. Step의 집합
+### 5-1. Job : 일, 일감. Step의 집합
 
-Step : 일의 단계. Tasklet을 실행
+- Job : 배치 계층 구조 최상위. 하나의 배치 작업 자체
+  - SimpleJob : 순차적으로 Step 실행
+  - FlowJob : 특정한 조건과 흐름에 따라 Step 실행
 
-Tasklet : 실제 수행 비즈니스 로직
+### 5-2. Step : 일의 단계. Tasklet을 실행
+
+### 5-3. Tasklet : 실제 수행 비즈니스 로직
 
 ## 6. Spring batch metadata
 
