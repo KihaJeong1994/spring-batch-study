@@ -64,8 +64,17 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar 'name=user1' 'seq(long)=2L'
   - Job 실행 중 발생하는 메타데이터를 DB에 저장
 
 ### 5-2. Step : 일의 단계. Tasklet을 실행
+- Step
+  - Job을 구성하는 독립적인 하나의 단계
+  - 입력, 처리, 출력과 관련된 복잡한 비즈니스 로직을 포함
+  - TaskletStep : 가장 기본 구현체. Tasklet 타입의 구현체 제어
+  - PartitionStep : 멀티 스레드 방식으로 Step을 여러개로 분리해서 실행
+  - JobStep : Step 내 Job 실행
+  - FlowStep : Step 내 Flow 실행
 
-### 5-3. Tasklet : 실제 수행 비즈니스 로직
+### 5-3. Tasklet : 실제 수행 비즈니스 로직. Step에서 수행하는 Task 정의
+- Tasklet
+  - Step : Tasklet = 1:1
 
 ## 6. Spring batch metadata
 
