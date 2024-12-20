@@ -38,6 +38,12 @@
   - ex) 오늘 실행한 A Job과 내일 실행한 A Job은 같은 Job이지만, 다른 인스턴스이고, 실행 시기, 내용 등이 다름
   - JobName + jobKey(JobParameters의 해시값) 을 식별값으로 가짐 -> 같은 JobKey를 가지고 있는 JobInstance는 중복해서 실행 불가
   - BATCH_JOB_INSTANCE 테이블과 매핑
+- JobExecution
+  - JobInstance에 대한 한번의 시도를 의미하는 객체
+  - 시작/종료시간, 상태(시작,완료,실패... ), 실행 결과
+  - 상태 COMPLETED -> JobInstance 재실행 불가
+  - 상태 FAILED -> JobInstance 재실행 가능(JobInstance가 재생성된다는 뜻은 아님)
+  - COMPLETED 상태에서 재실행 시 JobExecution 생기지 않음
 - JobParameter
   - Job 실행 시 파라미터로 사용가능
   - value와 타입(String, Date, Long, Double)을 담고있는 객체
