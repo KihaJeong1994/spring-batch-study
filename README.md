@@ -71,6 +71,13 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar 'name=user1' 'seq(long)=2L'
   - PartitionStep : 멀티 스레드 방식으로 Step을 여러개로 분리해서 실행
   - JobStep : Step 내 Job 실행
   - FlowStep : Step 내 Flow 실행
+- StepExecution
+  - Step에 대한 한번의 실행
+  - 시작/종료 시간, 상태, commit count, rollback count
+  - Step이 매번 시도될 때마다 생성. Step 별로 생성
+  - default : Job이 실패하면, 성공한 Step은 건너뛰고 실패한 Step부터 시작(옵션 설정 시 처음부터 다시 실행 가능)
+  - BATCH_STEP_EXECUTION 과 매핑
+  - JobExecution 과 1:M 관계
 
 ### 5-3. Tasklet : 실제 수행 비즈니스 로직. Step에서 수행하는 Task 정의
 - Tasklet
