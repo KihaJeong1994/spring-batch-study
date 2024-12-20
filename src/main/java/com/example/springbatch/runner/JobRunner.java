@@ -10,6 +10,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(name = "spring.batch.job.enabled", havingValue = "false")
@@ -23,6 +25,9 @@ public class JobRunner implements ApplicationRunner { // spring boot가 실행�
     public void run(ApplicationArguments args) throws Exception {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addString("name", "user2")
+                .addLong("seq", 1L)
+                .addDate("date", new Date())
+                .addDouble("age", 16.5)
                 .toJobParameters();
         jobLauncher.run(helloJob, jobParameters);
     }

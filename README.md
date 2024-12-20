@@ -38,6 +38,20 @@
   - ex) 오늘 실행한 A Job과 내일 실행한 A Job은 같은 Job이지만, 다른 인스턴스이고, 실행 시기, 내용 등이 다름
   - JobName + jobKey(JobParameters의 해시값) 을 식별값으로 가짐 -> 같은 JobKey를 가지고 있는 JobInstance는 중복해서 실행 불가
   - BATCH_JOB_INSTANCE 테이블과 매핑
+- JobParameter
+  - Job 실행 시 파라미터로 사용가능
+  - value와 타입(String, Date, Long, Double)을 담고있는 객체
+  - JobParameters 에 key, value 형태로 저장
+  - 하나의 Job에 존재할 수 있는 여러 JobInstance 구분
+  - JobParameter : JobInstance = 1:1
+  - BATCH_JOB_EXECUTION_PARAM 테이블과 매핑
+  - JOB_EXECUTION 과 1:M 관계
+  - JobParametersBuilder 혹은 java jar 파일 실행 시 파라미터로도 입력 가능
+```shell
+# 그냥 입력하면 long, double, date 인식을 못해서 괄호로 명시해줘야함
+# zsh 에서는 () 포함한 인자 전달 시 문제 발생해서 ''로 감싸줘야함
+java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar 'name=user1' 'seq(long)=2L' 'date(date)=2024/12/19' 'age(double)=16.5'
+```
 - JobLauncher
   - Job 실행. Job과 JobParameters를 인자로 받아서 실행
 - JobRepository
