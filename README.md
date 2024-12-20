@@ -75,3 +75,23 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar 'name=user1' 'seq(long)=2L'
     - ALWAYS
     - EMBEDDED
     - NEVER
+
+### 6-1. Job 관련 테이블
+- BATCH_JOB_INSTANCE
+  - Job 실행 시 JobInstance 정보 저장. jobname과 jobkey를 키로 하여 하나의 데이터 저장
+- BATCH_JOB_EXECUTION
+  - Job의 실행정보 저장
+  - Job 생성, 시작/종료시간, 실행상태, 메시지 관리
+- BATCH_JOB_EXECUTION_PARAMS
+  - JobParameter 정보 저장
+- BATCH_JOB_EXECUTION_CONTEXT
+  - Job 실행동안 여러 상태정보, 공유데이터를 직렬화(json)해서 저장
+  - Step 간 공유 가능
+
+### 6-2. Step 관련 테이블
+- BATCH_STEP_EXECUTION
+  - Step의 실행정보 저장
+  - Step 생성, 시작/종료 시간, 실행상태, 메시지 관리
+- BATCH_STEP_EXECUTION_CONTEXT
+  - Step 실행동안 상태정보, 공유데이터 직렬화해서 저장
+  - Step 별로 저장, Step 간 공유 불가
