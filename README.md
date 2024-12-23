@@ -78,6 +78,9 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar 'name=user1' 'seq(long)=2L'
   - default : Job이 실패하면, 성공한 Step은 건너뛰고 실패한 Step부터 시작(옵션 설정 시 처음부터 다시 실행 가능)
   - BATCH_STEP_EXECUTION 과 매핑
   - JobExecution 과 1:M 관계
+- StepContribution
+  - chunk 기반 프로세스 관련 정보를 StepExecution에 전달
+  - StepExecution의 apply()를 수행하면 StepExecution의 chunk 관련 정보가 StepExecution에 전달. 이 후 DB 저장
 
 ### 5-3. Tasklet : 실제 수행 비즈니스 로직. Step에서 수행하는 Task 정의
 - Tasklet
