@@ -86,6 +86,19 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar 'name=user1' 'seq(long)=2L'
 - Tasklet
   - Step : Tasklet = 1:1
 
+### 5-4. ExecutionContext
+- ExecutionContext
+  - key, value 컬렉션으로, JobExecution, StepExecution 객체의 상태(state)를 저장하는 공유 객체
+  - DB에 직렬화한 값으로 저장(json)
+- 공유 범위
+  - Step 범위 : StepExecution에 저장. Step간 공유 x. Listener, Tasklet 등에서 가져가서 사용.
+  - Job 범위 : 각 Job의 JobExecution에 저장. Job간 공유 x. 해당 Job의 Step들 간에는 공유.
+- 주 사용 용도 : 
+  - Job 실패 후 재 시작시, 이미 성공한 Step은 건너뛰고, 실패한 Job부터 실행 시 해당 상태정보 활용
+  - Caching
+- BATCH_JOB_EXECUTION_CONTEXT, BATCH_STEP_EXECUTION_CONTEXT 에 대응
+- ExecutionContext에 넣은 값은 별도의 조치가 없는 이상 Job 실행 도중 에러가 발생해도 롤백되지 않는다! -> 재시작 등의 로직에 활용 가능
+
 ## 6. Spring batch metadata
 
 - 배치 도메인(Job, Step, JobParameters) 관련 정보

@@ -6,6 +6,7 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +45,16 @@ public class HelloJobConfiguration { // Job 정의
                     System.out.println("=======================");
                     System.out.println(" >> Hello Spring Batch");
                     System.out.println("=======================");
+
+                    ExecutionContext jobExecutionContext = contribution.getStepExecution().getJobExecution().getExecutionContext();
+                    String jobName = chunkContext.getStepContext().getJobName();
+                    jobExecutionContext.putString("jobName", jobName);
+//                    throw new RuntimeException(); // Tasklet 수행 도중 에러가 발생하여도, ExecutionContext 안에 넣은 key, value는 롤백되지 않는다! -> 실패 이후 재시작할 때도 활용 가능
+
+                    ExecutionContext stepExecutionContext = contribution.getStepExecution().getExecutionContext();
+                    String stepName = chunkContext.getStepContext().getStepName();
+                    stepExecutionContext.putString("stepName", stepName);
+
                     return RepeatStatus.FINISHED; // step은 Tasklet을 기본적으로 무한반복시킴
                 }))
                 .build();
@@ -56,6 +67,14 @@ public class HelloJobConfiguration { // Job 정의
                     System.out.println("=======================");
                     System.out.println(" >> step 2 was executed");
                     System.out.println("=======================");
+
+                    ExecutionContext jobExecutionContext = contribution.getStepExecution().getJobExecution().getExecutionContext();
+                    String jobName = jobExecutionContext.getString("jobName");
+                    System.out.println("jobName = " + jobName);
+
+                    ExecutionContext stepExecutionContext = contribution.getStepExecution().getExecutionContext();
+                    Object stepName = stepExecutionContext.get("stepName");
+                    System.out.println("stepName = " + stepName); // StepExecutionContext는 공유 안되는 것 확인 가능
                     return RepeatStatus.FINISHED; // step은 Tasklet을 기본적으로 무한반복시킴
                 }))
                 .build();
