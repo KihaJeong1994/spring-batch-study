@@ -62,6 +62,11 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar 'name=user1' 'seq(long)=2L'
   - Job 실행. Job과 JobParameters를 인자로 받아서 실행
 - JobRepository
   - Job 실행 중 발생하는 메타데이터를 DB에 저장
+  - 시작/종료 시간, 실행 횟수, 결과 등 저장
+  - JobLauncher, Job, Step 구현체 내부에서 배치 관련 도메인을 DB에 CRUD 하는 데 사용
+  - BatchConfigurer를 구현하거나 BasicBatchConfigurer을 상속해서 커스터마이징 가능
+    - JobRepositoryFactoryBean : JDBC 방식. isolation level : serializable
+    - MapJobRepositoryFactoryBean : 인메모리 방식
 
 ### 5-2. Step : 일의 단계. Tasklet을 실행
 - Step
