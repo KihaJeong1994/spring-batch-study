@@ -27,7 +27,7 @@ public class HelloJobConfiguration { // Job 정의
         // JobLauncer를 의존성 주입받아서 활용 시, 해당 빈을 실제 SimpleJobLauncer가 아니라 Proxy 객체이기 때문
 //        SimpleJobLauncher jobLauncher = (SimpleJobLauncher) batchConfigurer.getJobLauncher();
 //        jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
-        return jobBuilderFactory.get("helloJob2")
+        return jobBuilderFactory.get("helloJob")
                 .start(helloStep1())
                 .next(helloStep2())
                 .build();
