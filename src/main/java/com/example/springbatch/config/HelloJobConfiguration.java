@@ -19,10 +19,15 @@ public class HelloJobConfiguration { // Job 정의
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
+//    private final BatchConfigurer batchConfigurer;
 
     @Bean
     public Job helloJob() {
-        return jobBuilderFactory.get("helloJob")
+        // JobLauncer의 TaskExecutor를 비동기로 설정하고 싶다면, 다음과 같이 BatchConfigurer 의 JobLauncer를 가져와서 형변환해서 셋팅해야함
+        // JobLauncer를 의존성 주입받아서 활용 시, 해당 빈을 실제 SimpleJobLauncer가 아니라 Proxy 객체이기 때문
+//        SimpleJobLauncher jobLauncher = (SimpleJobLauncher) batchConfigurer.getJobLauncher();
+//        jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+        return jobBuilderFactory.get("helloJob2")
                 .start(helloStep1())
                 .next(helloStep2())
                 .build();

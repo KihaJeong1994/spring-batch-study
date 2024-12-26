@@ -60,6 +60,14 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar 'name=user1' 'seq(long)=2L'
 ```
 - JobLauncher
   - Job 실행. Job과 JobParameters를 인자로 받아서 실행
+  - client에게 JobExecution 반환
+  - JobLauncherApplicationRunner 가 자동적으로 JobLauncher 실행
+  - 실행 설정
+    - 동기적 실행
+    - 비동기적 실행
+      - taskExecutor 를 SimpleAsyncTaskExecutor 로 설정할 경우
+      - JobExecution 을 획득한 후 Client 에게 바로 JobExecution 을 반환하고 배치처리 완료
+      - HTTP 요청에 의한 배치처리에 적합
 - JobRepository
   - Job 실행 중 발생하는 메타데이터를 DB에 저장
   - 시작/종료 시간, 실행 횟수, 결과 등 저장
