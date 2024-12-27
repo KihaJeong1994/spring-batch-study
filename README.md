@@ -82,6 +82,12 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
   - BatchConfigurer를 구현하거나 BasicBatchConfigurer을 상속해서 커스터마이징 가능
     - JobRepositoryFactoryBean : JDBC 방식. isolation level : serializable
     - MapJobRepositoryFactoryBean : 인메모리 방식
+- JobBuilderFactory
+  - JobBuilder 생성
+  - JobBuilder의 API 활용 시 아래 빌더 생성
+    - SimpleJobBuilder : SimpleJob 생성
+    - JobFlowBuilder : Flow 생성
+      - FlowJobBuilder 의존 : FlowJob 생성
 
 ### 5-2. Step : 일의 단계. Tasklet을 실행
 - Step
