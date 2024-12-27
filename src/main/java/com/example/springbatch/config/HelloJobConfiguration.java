@@ -1,16 +1,16 @@
 package com.example.springbatch.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Configuration
@@ -30,6 +30,10 @@ public class HelloJobConfiguration { // Job 정의
         return jobBuilderFactory.get("helloJob")
                 .start(helloStep1())
                 .next(helloStep2())
+//                .incrementer(new RunIdIncrementer())
+//                .validator(parameters -> {})
+//                .preventRestart() // 실패해도 재시작 못하도록 설정. 다만 위에 incrementer 설정 시 매번 새로운 JobInstance가 생성되어 실패하는 현상을 볼 수 없음
+                .listener(helloJobExecutionListener())
                 .build();
 
     }
@@ -83,5 +87,20 @@ public class HelloJobConfiguration { // Job 정의
                     return RepeatStatus.FINISHED; // step은 Tasklet을 기본적으로 무한반복시킴
                 }))
                 .build();
+    }
+
+    @Bean
+    public JobExecutionListener helloJobExecutionListener() {
+        return new JobExecutionListener() {
+            @Override
+            public void beforeJob(JobExecution jobExecution) {
+                System.out.println("--- job started at "+ LocalDateTime.now());
+            }
+
+            @Override
+            public void afterJob(JobExecution jobExecution) {
+                System.out.println("--- job ended at "+ LocalDateTime.now());
+            }
+        };
     }
 }
