@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +30,8 @@ public class HelloJobConfiguration { // Job 정의
                 .start(helloStep1())
                 .next(helloStep2())
 //                .incrementer(new RunIdIncrementer())
-//                .validator(parameters -> {})
+                .validator(helloJobParametersValidator()) // JobParameters 검증. SimpleJobLauncer, SimpleJob에서 두번 체크
+//                .validator(new DefaultJobParametersValidator(new String[]{"name","date"}, new String[]{"count"})) // optionalKeys 설정 시 jobParameters에는 반드시 requiredKeys 혹은 optionalKeys 안에 들어가는 키만 포함되어야함
 //                .preventRestart() // 실패해도 재시작 못하도록 설정. 다만 위에 incrementer 설정 시 매번 새로운 JobInstance가 생성되어 실패하는 현상을 볼 수 없음
                 .listener(helloJobExecutionListener())
                 .build();
@@ -94,12 +94,21 @@ public class HelloJobConfiguration { // Job 정의
         return new JobExecutionListener() {
             @Override
             public void beforeJob(JobExecution jobExecution) {
-                System.out.println("--- job started at "+ LocalDateTime.now());
+                System.out.println("--- job started at " + LocalDateTime.now());
             }
 
             @Override
             public void afterJob(JobExecution jobExecution) {
-                System.out.println("--- job ended at "+ LocalDateTime.now());
+                System.out.println("--- job ended at " + LocalDateTime.now());
+            }
+        };
+    }
+
+    @Bean
+    public JobParametersValidator helloJobParametersValidator() {
+        return parameters -> {
+            if (parameters.getString("name") == null) {
+                throw new JobParametersInvalidException("name is required");
             }
         };
     }
