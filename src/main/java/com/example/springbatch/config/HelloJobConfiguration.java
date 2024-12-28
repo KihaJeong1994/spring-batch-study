@@ -9,7 +9,9 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 @Configuration
@@ -29,7 +31,8 @@ public class HelloJobConfiguration { // Job 정의
         return jobBuilderFactory.get("helloJob")
                 .start(helloStep1())
                 .next(helloStep2())
-//                .incrementer(new RunIdIncrementer())
+//                .incrementer(new RunIdIncrementer()) // run.id 라는 JobParameter 추가해서 계속해서 증가
+                .incrementer(helloJobParametersIncrementer())
                 .validator(helloJobParametersValidator()) // JobParameters 검증. SimpleJobLauncer, SimpleJob에서 두번 체크
 //                .validator(new DefaultJobParametersValidator(new String[]{"name","date"}, new String[]{"count"})) // optionalKeys 설정 시 jobParameters에는 반드시 requiredKeys 혹은 optionalKeys 안에 들어가는 키만 포함되어야함
 //                .preventRestart() // 실패해도 재시작 못하도록 설정. 다만 위에 incrementer 설정 시 매번 새로운 JobInstance가 생성되어 실패하는 현상을 볼 수 없음
@@ -110,6 +113,19 @@ public class HelloJobConfiguration { // Job 정의
             if (parameters.getString("name") == null) {
                 throw new JobParametersInvalidException("name is required");
             }
+        };
+    }
+
+    static final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd-hhmmss");
+
+    @Bean
+    public JobParametersIncrementer helloJobParametersIncrementer() {
+        return jobParameters -> {
+            if (jobParameters == null) {
+                return new JobParameters();
+            }
+            String id = format.format(new Date());
+            return new JobParametersBuilder(jobParameters).addString("run.id", id).toJobParameters();
         };
     }
 }
