@@ -113,6 +113,13 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
   - PartitionStepBuilder : PartitionStep 생성. 멀티스레드 방식으로 Job 실행
   - JobStepBuilder : job(job)
   - FlowStepBuilder : flow(flow)
+- TaskletStep
+  - Tasklet 실행하는 Step
+  - RepeatTemplate을 사용해서 Tasklet을 트랜잭션 경계 내에서 반복 실행(RepeatStatus를 조정해서 종료 가능. 디폴트 값은 반복)
+    - Tasklet은 Transaction 처리가 되어 실행된다는 의미(?)
+  - Task 기반과 Chunk 기반으로 나누어서 Tasklet 실행
+  - Task 기반 : 청크 기반 작업보다 단일 작업 기반으로 처리되는 것이 더 효율적인 경우
+  - Chunk 기반 : 하나의 큰 덩어리를 n개씩 나누어서 실행. ItemReader, ItemProcessor, ItemWriter 사용. ChunkOrientedTasklet 구현체 제공.
 
 ### 5-3. Tasklet : 실제 수행 비즈니스 로직. Step에서 수행하는 Task 정의
 - Tasklet
