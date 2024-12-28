@@ -107,6 +107,12 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
 - StepContribution
   - chunk 기반 프로세스 관련 정보를 StepExecution에 전달
   - StepExecution의 apply()를 수행하면 StepExecution의 chunk 관련 정보가 StepExecution에 전달. 이 후 DB 저장
+- StepBuilder
+  - TaskletStepBuilder : tasklet(tasklet). TaskletStep을 생성하는 기본 빌더 클래스. 주로 사용자 정의 Tasklet 실행
+  - SimpleStepBuilder : chunk(chunkSize) or chunk(completionPolicy).TaskletStep을 생성하며, 내부적으로 청크기반의 작업을 처리하는 ChunkOrientedTasklet 클래스 생성
+  - PartitionStepBuilder : PartitionStep 생성. 멀티스레드 방식으로 Job 실행
+  - JobStepBuilder : job(job)
+  - FlowStepBuilder : flow(flow)
 
 ### 5-3. Tasklet : 실제 수행 비즈니스 로직. Step에서 수행하는 Task 정의
 - Tasklet
