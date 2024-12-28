@@ -34,8 +34,11 @@ public class HelloStepConfiguration {
         return stepBuilderFactory.get("taskStep")
                 .tasklet(((contribution, chunkContext) -> {
                     System.out.println("taskStep was executed");
+//                    contribution.getStepExecution().setStatus(BatchStatus.FAILED);
                     return RepeatStatus.FINISHED;
                 }))
+//                .startLimit(2) // 원래는 해당 Step이 FAILED일 경우에 계속 반복해서 수행 가능한데, 실행 횟수 제한을 걸 수 있다
+//                .allowStartIfComplete(true) // Job 실행 중 특정 Step에서 에러 발생 시, 그 이전에 성공한 Step들은 원래 재시작되지않는데, 항상 재시작되게 설정 가능. 유효성 검증, 꼭 필요한 사전작업 관련 Step 에 설정
                 .build();
     }
 
@@ -51,7 +54,7 @@ public class HelloStepConfiguration {
                     }
                 })
                 .writer(items -> {
-                    items.forEach(item ->{
+                    items.forEach(item -> {
                         System.out.print(item);
                         System.out.print("&");
                     });

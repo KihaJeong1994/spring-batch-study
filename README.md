@@ -124,6 +124,10 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
 ### 5-3. Tasklet : 실제 수행 비즈니스 로직. Step에서 수행하는 Task 정의
 - Tasklet
   - Step : Tasklet = 1:1
+  - Step 내에서 실행되며, 주로 단일 태스크 수행하기 위함
+  - RepeatStatus : Tasklet의 반복 여부 상태값
+    - FINISHED : 종료(null)
+    - CONTINUABLE : 계속 수행
 
 ### 5-4. ExecutionContext
 - ExecutionContext
