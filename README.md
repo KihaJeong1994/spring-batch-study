@@ -95,7 +95,7 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
   - 입력, 처리, 출력과 관련된 복잡한 비즈니스 로직을 포함
   - TaskletStep : 가장 기본 구현체. Tasklet 타입의 구현체 제어
   - PartitionStep : 멀티 스레드 방식으로 Step을 여러개로 분리해서 실행
-  - JobStep : Step 내 Job 실행
+  - JobStep : Step 내 Job 실행. 커다란 시스템을 작은 모듈로 쪼개고, job의 흐름을 관리하고자 사용.
   - FlowStep : Step 내 Flow 실행
 - StepExecution
   - Step에 대한 한번의 실행
