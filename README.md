@@ -33,6 +33,9 @@
 - Job : 배치 계층 구조 최상위. 하나의 배치 작업 자체
   - SimpleJob : 순차적으로 Step 실행
   - FlowJob : 특정한 조건과 흐름에 따라 Step 실행
+    - Step이 실패하더라도 Job은 실패로 끝나지 않도록 해야하는 경우
+    - 조건에 따라 다음 실행할 Step을 구분해서 실행해야하는 경우
+    - 특정 Step은 전혀 실행되지 않게 구성해야하는 경우
 - JobInstance
   - 고유하게 식별 가능한 작업 실행
   - ex) 오늘 실행한 A Job과 내일 실행한 A Job은 같은 Job이지만, 다른 인스턴스이고, 실행 시기, 내용 등이 다름
@@ -88,6 +91,7 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
     - SimpleJobBuilder : SimpleJob 생성
     - JobFlowBuilder : Flow 생성
       - FlowJobBuilder 의존 : FlowJob 생성
+        - on(String pattern) : TransitionBuilder 를 생성 후 Step 간 조건부 전환 구성. to(), stop(), fail(), end(), stopAndRestart() 를 통해 FlowBuilder 리턴
 
 ### 5-2. Step : 일의 단계. Tasklet을 실행
 - Step
