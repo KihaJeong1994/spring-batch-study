@@ -167,6 +167,10 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
 - BATCH_JOB_EXECUTION
   - Job의 실행정보 저장
   - Job 생성, 시작/종료시간, 실행상태, 메시지 관리
+  - BatchStatus
+    - Job, Step의 실행상태 및 최종 결과 상태
+  - ExitStatus
+    - Job, Step 이 어떤 상태로 종료되었는 지 정의
 - BATCH_JOB_EXECUTION_PARAMS
   - JobParameter 정보 저장
 - BATCH_JOB_EXECUTION_CONTEXT
