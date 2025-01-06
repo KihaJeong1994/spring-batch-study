@@ -30,6 +30,6 @@ spring:
   batch:
     jdbc:
       initialize-schema: always # never일 때 db에 spring batch metadata 스키마가 없으면 에러 발생. 단, embedded의 경우 알아서 생성되어서 불필요
-#    job:
-#      names: ${job.name:NONE} # 이렇게 yaml 파일에 설정하면, --job.name= 를 통해 실행시킬 job을 선택 가능. 아니면 그냥 하드코딩도 가능
+    job:
+      names: ${job.name:NONE} # 이렇게 yaml 파일에 설정하면, --job.name= 를 통해 실행시킬 job을 선택 가능. 아니면 그냥 하드코딩도 가능
 #      enabled: false

@@ -17,7 +17,6 @@ import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "spring.batch.job.enabled", havingValue = "false")
 public class HelloStepConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;

@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "spring.batch.job.enabled", havingValue = "false")
 public class JobStepConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -24,7 +23,7 @@ public class JobStepConfiguration {
     public Job parentJob() {
         return jobBuilderFactory.get("parentJob")
                 .start(jobStep())
-                .next(step2())
+                .next(jobStep2())
                 .incrementer(new RunIdIncrementer())
                 .build();
     }
@@ -32,7 +31,7 @@ public class JobStepConfiguration {
 //    @Bean // Bean 등록 시 parentJob 수행 완료 후 childJob 한번 더 실행하려해서 에러 발생
     public Job childJob() {
         return jobBuilderFactory.get("childJob")
-                .start(step1())
+                .start(jobStep1())
                 .incrementer(new RunIdIncrementer())
                 .build();
     }
@@ -62,20 +61,20 @@ public class JobStepConfiguration {
     }
 
     @Bean
-    public Step step1() {
-        return stepBuilderFactory.get("step1")
+    public Step jobStep1() {
+        return stepBuilderFactory.get("jobStep1")
                 .tasklet(((contribution, chunkContext) -> {
-                    System.out.println("step1");
+                    System.out.println("jobStep1");
                     return RepeatStatus.FINISHED;
                 }))
                 .build();
     }
 
     @Bean
-    public Step step2() {
-        return stepBuilderFactory.get("step2")
+    public Step jobStep2() {
+        return stepBuilderFactory.get("jobStep2")
                 .tasklet(((contribution, chunkContext) -> {
-                    System.out.println("step2");
+                    System.out.println("jobStep2");
                     return RepeatStatus.FINISHED;
                 }))
                 .build();
