@@ -190,6 +190,17 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
   - Step 실행동안 상태정보, 공유데이터 직렬화해서 저장
   - Step 별로 저장, Step 간 공유 불가
 
+## 7. 스프링 배치 청크 프로세스(1)
+
+### 7-1. Chunk
+
+- chunk : 여러 개의 아이템을 묶은 하나의 덩어리
+- 한번에 하나씩 아이템을 입력받아 Chunk 단위의 덩어리로 만든 후, ***Chunk 단위로 트랜잭션을 처리***
+- Chunk<I> vs Chunk<O>
+  - Chunk<I> : ItemReader가 item을 읽어와서 chunkSize 만큼 item이 담긴 Chunk를 생성
+  - Chunk<O> : ItemProcessor가 item을 하나하나 trasform하여 <O> 타입으로 변형하여 Chunk<O>에 적재
+  - ItemWriter에서 Chunk<O>를 처리
+
 ## 99. 기타
 
 ### 99-1. 사용자 정의 ExitStatus
