@@ -30,11 +30,7 @@ public class ChunkConfiguration {
         return stepBuilderFactory.get("chunConfigurationkStep")
                 .<String, String>chunk(5)
                 .reader(new ListItemReader<>(Arrays.asList("item1","item2","item3","item4","item5","item6","item7","item8","item9","item10")))
-                .processor((ItemProcessor<String, String>) item -> {
-                    String processed = "processed" + item;
-                    System.out.println(processed);
-                    return processed;
-                })
+                .processor((ItemProcessor<String, String>) item -> "processed" + item)
                 .writer(items -> {
                     System.out.println("items: " + items);
                 })
