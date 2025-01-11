@@ -92,6 +92,11 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
     - JobFlowBuilder : Flow 생성
       - FlowJobBuilder 의존 : FlowJob 생성
         - on(String pattern) : TransitionBuilder 를 생성 후 Step 간 조건부 전환 구성. to(), stop(), fail(), end(), stopAndRestart() 를 통해 FlowBuilder 리턴
+          - StepExecution의 ExitStatus에 따라 무엇을 수행할지(to, stop, fail, end, stopAndRestart) 결정
+          - 특수문자로 *, ? 허용. * : 모든 문자, ? : 1개의 문자
+          - 구체적인 pattern이 먼저 적용
+        - from() : 이전 단계에서 정의한 Transition 새롭게 추가 정의. else if 느낌?
+        - end() : Step의 ExitStutus가 FAILED 여도, Job의 BatchStatus가 COMPLETED로 종료하도록 하여 Job의 재시작이 불가능하도록 함
 
 ### 5-2. Step : 일의 단계. Tasklet을 실행
 - Step
