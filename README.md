@@ -208,14 +208,19 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
 - TaskletStep에 의해 반복적으로 실행되며, ***실행될 때마다 새로운 트랜잭션 생성*** 및 처리
 - ChunkProvider
   - ItemReader 핸들링
+  - 구현체 : SimpleChunkProvider, FaultTolerantChunkProvider
 - ChunkProcessor
-  - ItemProcessor, ItemWriter 핸들링
+  - ItemProcessor(변형, 가공, 필터링), ItemWriter(저장, 출력) 핸들링
+  - 구현체 : SimpleChunkProcessor, FaultTolerantChunkProcessor
 - API
   - chunk(int) : chunk size 설정. commit interval 의미
   - chunk(CompletionPolicy) : Chunk 프로세스를 완료하기 위한 정책 설정 클래스 지원. chunk(int)가 숫자 조건이라면, 이 api는 정책 조건
   - stream(ItemStream) : 재시작 데이터를 관리하는 롤백에 대한 스트림 등록. execution context 활용하여 재시작 시 활용
   - readerIsTransactionalQueue() : Item이 JMS, Message Queue Server와 같은 트랜잭션 외부에서 읽혀지고 캐시할 것인지
   - listener(ChunkListener) : Chunk 프로세스 진행되는 특정 시점에 콜백 제공받도록 리스너 설정
+- 이중 반복문으로 이해하면 됨
+  - 1. ItemReader에서 데이터가 없을 때까지 chunk size 단위로 반복(총 100개를 10개 씩)
+  - 2. chunk size 만큼 순회(10개 데이터를 하나씩)
 
 ## 99. 기타
 
