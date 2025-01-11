@@ -189,3 +189,9 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
 - BATCH_STEP_EXECUTION_CONTEXT
   - Step 실행동안 상태정보, 공유데이터 직렬화해서 저장
   - Step 별로 저장, Step 간 공유 불가
+
+## 7. 기타
+
+### 7-1. 사용자 정의 ExitStatus
+- ExitStatus에 존재하지 않는 exitCode 새롭게 정의 -> ExitStatus는 Enum이 아니다!
+- afterStep에서 특정 조건에 따라 커스텀한 ExitStatus를 return 하는 StepExecutionListner를 정의 후, step에 붙여주면 다른 ExitStatus 리턴 가능
