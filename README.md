@@ -201,6 +201,22 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
   - Chunk<O> : ItemProcessor가 item을 하나하나 trasform하여 <O> 타입으로 변형하여 Chunk<O>에 적재
   - ItemWriter에서 Chunk<O>를 처리
 
+### 7-2. ChunkOrientedTasklet
+
+- Chunk 기반 프로세싱을 담당하는 도메인 객체
+- ItemReader, ItemProcessor, ItemWriter 를 사용해 Chunk 기반 입출력 처리
+- TaskletStep에 의해 반복적으로 실행되며, ***실행될 때마다 새로운 트랜잭션 생성*** 및 처리
+- ChunkProvider
+  - ItemReader 핸들링
+- ChunkProcessor
+  - ItemProcessor, ItemWriter 핸들링
+- API
+  - chunk(int) : chunk size 설정. commit interval 의미
+  - chunk(CompletionPolicy) : Chunk 프로세스를 완료하기 위한 정책 설정 클래스 지원. chunk(int)가 숫자 조건이라면, 이 api는 정책 조건
+  - stream(ItemStream) : 재시작 데이터를 관리하는 롤백에 대한 스트림 등록. execution context 활용하여 재시작 시 활용
+  - readerIsTransactionalQueue() : Item이 JMS, Message Queue Server와 같은 트랜잭션 외부에서 읽혀지고 캐시할 것인지
+  - listener(ChunkListener) : Chunk 프로세스 진행되는 특정 시점에 콜백 제공받도록 리스너 설정
+
 ## 99. 기타
 
 ### 99-1. 사용자 정의 ExitStatus
