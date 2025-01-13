@@ -208,9 +208,29 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
 - TaskletStep에 의해 반복적으로 실행되며, ***실행될 때마다 새로운 트랜잭션 생성*** 및 처리
 - ChunkProvider
   - ItemReader 핸들링
+    - 읽는 소스 종류
+      - 플랫 파일 : csv, txt 등
+      - XML, Json
+      - Database
+      - Message Queue : JMS, RabbitMQ
+      - CustomReader
+    - 보통 ItemStream과 함께 구현
+      - ItemStream : 파일의 스트림을 열거나 종료. DB 커넥션을 열거나 종료 등
   - 구현체 : SimpleChunkProvider, FaultTolerantChunkProvider
 - ChunkProcessor
   - ItemProcessor(변형, 가공, 필터링), ItemWriter(저장, 출력) 핸들링
+  - ItemProcessor
+    - ItemProcessor에서 null 반환 시 ItemWriter에 전달 x
+  - ItemWriter
+    - 쓰는 목적지 종류
+      - 플랫 파일 : csv, txt 등
+      - XML, Json
+      - Database
+      - Message Queue : JMS, RabbitMQ
+      - Mail Service
+      - Custom Writer
+    - 아이템 하나가 아닌 ***아이템 리스트***를 전달. 일괄처리
+    - 보통 ItemStream을 같이 구현. ItemReader 구현체와 1:1 매핑
   - 구현체 : SimpleChunkProcessor, FaultTolerantChunkProcessor
 - API
   - chunk(int) : chunk size 설정. commit interval 의미
