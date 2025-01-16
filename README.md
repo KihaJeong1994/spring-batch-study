@@ -242,6 +242,22 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
   - 1. ItemReader에서 데이터가 없을 때까지 chunk size 단위로 반복(총 100개를 10개 씩)
   - 2. chunk size 만큼 순회(10개 데이터를 하나씩)
 
+## 8. 스프링 배치 청크 프로세스(2)
+
+### 8-1. Cursor & Paging
+
+Cursor Based
+- JDBC ResultSet의 기본 메커니즘 사용
+- 현재 행에 커서를 유지하며, 다음 데이터를 호출하면 다음 행으로 커서를 이동하며 데이터 반환이 이루어지는 Steaming 방식의 I/O
+- ResultSet 이 open 될 때마다 next() 메소드가 호출되어 DB 데이터 반환 및 객체와 매핑이 이루어진다
+- DB Connection이 연결되면 배치 처리가 완료될 때까지 데이터를 읽어옴 -> DB와 SocketTimeout 충분히 크게 설정 필요
+- 모든 결과를 메모리에 할당 -> 메모리 사용량 많음
+- fetchSize 조절 가능 -> 한번 커서를 이동할 때 fetchSize 만큼의 데이터를 가져옴(?)
+
+Paging Based
+- Page Size 만큼 조회
+- offset, limit
+
 ## 99. 기타
 
 ### 99-1. 사용자 정의 ExitStatus
