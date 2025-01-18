@@ -33,3 +33,8 @@ spring:
     job:
       names: ${job.name:NONE} # 이렇게 yaml 파일에 설정하면, --job.name= 를 통해 실행시킬 job을 선택 가능. 아니면 그냥 하드코딩도 가능
 #      enabled: false
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
