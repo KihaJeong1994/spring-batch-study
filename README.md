@@ -86,6 +86,7 @@ java -jar build/libs/spring-batch-0.0.1-SNAPSHOT.jar --job.name=helloJob,simpleJ
     - JobRepositoryFactoryBean : JDBC 방식. isolation level : serializable
     - MapJobRepositoryFactoryBean : 인메모리 방식
 - JobBuilderFactory
+- 
   - JobBuilder 생성
   - JobBuilder의 API 활용 시 아래 빌더 생성
     - SimpleJobBuilder : SimpleJob 생성
